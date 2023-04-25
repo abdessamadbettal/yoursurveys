@@ -191,8 +191,12 @@ export default {
 
 
     function logout(){
-        store.commit('logout')
-        router.push({name: 'Login'})
+        store.dispatch('logout')
+        .then(() => {
+            router.push({name: 'Login'})
+        }).catch((error) => {
+            console.log(error)
+        })
     }
 
 

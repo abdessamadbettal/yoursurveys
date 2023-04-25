@@ -21,7 +21,7 @@ class AuthController extends Controller
         $remember = $credentials['remember'] ?? false; // default to false if not set in request
         unset($credentials['remember']); // remove remember from credentials array
 
-        if (!Auth::attempt($credentials, $remember)) { // attempt to login with credentials that means email and password 
+        if (!Auth::attempt($credentials, $remember)) { // attempt to login with credentials that means email and password
             return response([
                 'error' => 'The Provided credentials are not correct'
             ], 422);
@@ -37,8 +37,14 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        /** @var User $user */
+        $user = Auth::user();
+        // Revoke the token that was used to authenticate the current request...
+        $user->currentAccessToken()->delete();
+
+        return response([
+            'success' => true
+        ]);
     }
 
     // register
