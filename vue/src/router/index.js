@@ -5,6 +5,7 @@ import Dashboard from "../views/Dashboard.vue";
 import DefaultLayout from "../layouts/DefaultLayout.vue";
 import AuthLayout from "../layouts/AuthLayout.vue";
 import Surveys from "../views/Surveys.vue";
+import SurveysView from "../views/SurveysView.vue";
 import store from "../store";
 
 const routes = [
@@ -16,6 +17,9 @@ const routes = [
         children: [
             { path: "/dashboard", name: "Dashboard", component: Dashboard },
             { path: "/surveys", name: "Surveys", component: Surveys },
+            { path: "/surveys/create", name: "SurveyCreate", component: SurveysView },
+            { path: "/surveys/:id", name: "SurveyView", component: SurveysView },
+
         ],
     },
     {

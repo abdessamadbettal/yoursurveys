@@ -7,7 +7,7 @@ const tmpSurveys = [
         title: "Survey 1",
         slug: "survey-1",
         status: "published",
-        image: "https://source.unsplash.com/random/400x300",
+        image: "https://i.imgur.com/pBNT1yy.png",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo.",
         questions: [
             {
@@ -42,7 +42,7 @@ const tmpSurveys = [
         title: "Survey 1",
         slug: "survey-1",
         status: "published",
-        image: "https://source.unsplash.com/random/400x300",
+        image: "https://i.imgur.com/BxQe48y.png",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo.",
         questions: [
             {
@@ -77,7 +77,7 @@ const tmpSurveys = [
         title: "Survey 1",
         slug: "survey-1",
         status: "published",
-        image: "https://source.unsplash.com/random/400x300",
+        image: "https://i.imgur.com/wdYXsgR.png",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo.",
         questions: [
             {
@@ -140,7 +140,7 @@ const tmpSurveys = [
         title: "Survey 1",
         slug: "survey-1",
         status: "published",
-        image: "https://source.unsplash.com/random/400x300",
+        image: "https://i.imgur.com/Kp5kTUp.png",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo.",
         questions: [],
         created_at: "2021-01-01 00:00:00",
@@ -164,7 +164,7 @@ const store = createStore({
             },
             token: sessionStorage.getItem("TOKEN"),
         },
-        surveys: [...tmpSurveys],
+        surveys: [ ...tmpSurveys ],
     },
     getters: {},
     actions: {
