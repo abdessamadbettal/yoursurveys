@@ -39,16 +39,116 @@ const tmpSurveys = [
     },
     {
         id: 2,
-        title: "Survey 1",
+        title: "vue js survey",
         slug: "survey-1",
-        status: "published",
+        status: "draft",
         image: "https://i.imgur.com/BxQe48y.png",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel eros sit amet arcu vestibulum accumsan in in leo.",
         questions: [
             {
                 id: 1,
-                type: "text",
-                description: " description 1",
+                type: "checkbox",
+                question: " where are you from in FRANCE  ?",
+                description: "where are you from?",
+                data:{
+                    options: [
+                        {
+                            uuid: "uuid1",
+                            text: "option 111",
+                        },
+                        {
+                            uuid: "uuid2",
+                            text: "option 2",
+                        },
+                        {
+                            uuid: "uuid3",
+                            text: "option 3",
+                        },
+
+                    ]
+                },
+            },
+            {
+                id: 2,
+                type: "select",
+                question: " where are you from in morocco?",
+                description: " where are you from?",
+                data:{
+                    options: [
+                        {
+                            uuid: "uuid1",
+                            text: "option 1",
+                        },
+                        {
+                            uuid: "uuid2",
+                            text: "option 2",
+                        },
+                        {
+                            uuid: "uuid3",
+                            text: "option 3",
+                        },
+
+                    ]
+                },
+            },
+            {
+                id: 3,
+                type: "checkbox",
+                question: " where are you from in morocco?",
+                description: " where are you from?",
+                data:{
+                    options: [
+                        {
+                            uuid: "uuid1",
+                            text: "option 1",
+                        },
+                        {
+                            uuid: "uuid2",
+                            text: "option 2",
+                        },
+                        {
+                            uuid: "uuid3",
+                            text: "option 3",
+                        },
+
+                    ]
+                },
+            },
+            {
+                id: 3,
+                type: "radio",
+                question: " where are you from in morocco?",
+                description: " where are you from?",
+                data:{
+                    options: [
+                        {
+                            uuid: "uuid1",
+                            text: "option 1",
+                        },
+                        {
+                            uuid: "uuid2",
+                            text: "option 2",
+                        },
+                        {
+                            uuid: "uuid3",
+                            text: "option 3",
+                        },
+
+                    ]
+                },
+            },
+            {
+                id: 4,
+                type: "textarea",
+                question: " where are you from in morocco?",
+                description: " where are you from?",
+                data:{ },
+            },
+            {
+                id: 5,
+                type: "radio",
+                question: " where are you from in morocco?",
+                description: " where are you from?",
                 data:{
                     options: [
                         {
@@ -136,7 +236,7 @@ const tmpSurveys = [
         expire_date: "2021-01-01 00:00:00",
     },
     {
-        id: 3,
+        id: 4,
         title: "Survey 1",
         slug: "survey-1",
         status: "published",
@@ -165,6 +265,7 @@ const store = createStore({
             token: sessionStorage.getItem("TOKEN"),
         },
         surveys: [ ...tmpSurveys ],
+        questionTypes: ["text", "textarea", "checkbox", "radio", "select"],
     },
     getters: {},
     actions: {
@@ -188,6 +289,25 @@ const store = createStore({
                 return response;
             });
         },
+        saveSurvey({ commit }, survey) {
+            delete survey.image_url;
+
+            let response;
+            if (survey.id) {
+                response = axiosClient
+                .put(`/survey/${survey.id}`, survey)
+                .then((res) => {
+                    commit('updateSurvey', res.data)
+                    return res;
+                });
+            } else {
+                    response = axiosClient.post("/survey", survey).then((res) => {
+                    commit('saveSurvey', res.data)
+                    return res;
+                    });
+             }
+            return response;
+            },
     },
     mutations: {
         logout: (state) => {
@@ -200,6 +320,15 @@ const store = createStore({
             state.user.token = payload.token;
             sessionStorage.setItem("TOKEN", payload.token);
         },
+        saveSurvey: (state, payload) => {
+            state.surveys.push(payload);
+        },
+        updateSurvey: (state, payload) => {
+            const index = state.surveys.findIndex((survey) => survey.id === payload.id);
+            if (index !== -1) {
+                state.surveys[index] = payload;
+            }
+        }
     },
     modules: {},
 });

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'user_id');
             $table->string('title', '1000');
             $table->string('slug', '1000');
+            $table->string('description', '1000');
             $table->tinyInteger('status'); // that is, 0 or 1
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
