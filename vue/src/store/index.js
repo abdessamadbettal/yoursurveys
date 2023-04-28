@@ -264,11 +264,27 @@ const store = createStore({
             },
             token: sessionStorage.getItem("TOKEN"),
         },
+        currentSurvey: {
+            loading: false,
+            data: {},
+        },
         surveys: [ ...tmpSurveys ],
         questionTypes: ["text", "textarea", "checkbox", "radio", "select"],
     },
     getters: {},
     actions: {
+        getSurvey({ commit }, id) {
+            commit("setCurrentSurvey", { loading: true })
+            return axiosClient.get(`/survey/${id}`).then((response) => {
+                commit("setCurrentSurvey", response.data);
+                commit("setCurrentSurveyLoading", false);
+                return response;
+            }).catch((error) => {
+                commit("setCurrentSurveyLoading", false);
+                return error;
+            });
+        },
+
         register({ commit }, payload) {
             return new Promise((resolve, reject) => {
                 axiosClient.post("/register", payload).then((response) => {
@@ -314,6 +330,12 @@ const store = createStore({
             state.user.token = null;
             state.user.data = {};
             sessionStorage.removeItem("TOKEN");
+        },
+        setCurrentSurvey: (state, payload) => {
+            state.currentSurvey.data = payload.data ;
+        },
+        setCurrentSurveyLoading: (state, loading) => {
+            state.currentSurvey.loading = payload.loading ;
         },
         setUser: (state, payload) => {
             state.user.data = payload.user;

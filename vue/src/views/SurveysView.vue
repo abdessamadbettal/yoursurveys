@@ -194,7 +194,7 @@
  <script setup>
 import PageComponent from "../components/PageComponent.vue";
 import { v4 as uuidv4 } from "uuid";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import store from "../store";
 import { useRoute , useRouter } from "vue-router";
 
@@ -213,10 +213,19 @@ let model = ref({
   expires_at: "",
   questions: [],
 });
+
+watch(
+  () => store.state.currentSurvey.data,
+  (newVal, oldVal) => {
+    model.value = {
+      ...JSON.parse(JSON.stringify(newVal)),
+      status: !!newVal.status,
+    };
+  }
+);
+
 if (route.params.id) {
-  model.value = store.state.surveys.find(
-    (survey) => survey.id == route.params.id
-  );
+    store.dispatch("getSurvey", route.params.id);
 }
 
 function onImageChoose(event) {
